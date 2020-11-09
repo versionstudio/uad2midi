@@ -20,13 +20,12 @@ This application was made possible thanks to the reverse engineering done by rad
 
 ### How do I set this up?
 
-The application has been developed and tested on Mac OSX. There's no user interface, everything is configured in *uad2midi.properties*. Run the provided script *bin/startup.sh* to launch ua2midi.
+The application has been developed and tested on Mac OSX, and requires no special permissions to run. There's no user interface, everything is configured in *uad2midi.properties*. Run the provided script *bin/startup.sh* to launch ua2midi.
 
 ###### Requirements:
 - UAD hardware
 - MIDI device
 - Java
-- The application requires no special permissions to be run
 
 ###### Virtual MIDI device on Mac OSX
 For my own use case used virtual device *IAC Driver* in as the MIDI device. To do this:
