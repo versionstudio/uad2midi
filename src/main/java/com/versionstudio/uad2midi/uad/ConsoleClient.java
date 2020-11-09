@@ -94,7 +94,7 @@ public class ConsoleClient {
 			logger.info("Connected to UAD console at: {}", this.clientSocket.getRemoteSocketAddress());
 			return true;
 		} catch (IOException e) {
-				logger.info("Could not connect to UAD console. Retrying in {} ms",RECONNECT_WAIT);
+			logger.info("Could not connect to UAD console. Retrying in {} ms",RECONNECT_WAIT);
 			if ( logger.isDebugEnabled() ) {
 				logger.debug("Failed opening connection to UAD console",e);
 			}
