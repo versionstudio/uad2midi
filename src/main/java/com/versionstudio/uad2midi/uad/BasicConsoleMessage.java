@@ -8,9 +8,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BasicConsoleMessage {
-    private String path;
+	private String path;
 
-    public String getPath() {
-        return this.path;
-    }
+	public String getPath() {
+		return this.path;
+	}
 }

@@ -7,13 +7,15 @@ package com.versionstudio.uad2midi.core;
 class Shutdown extends Thread {
 	private final Application application;
 	
-	public Shutdown(Application application) { this.application = application; }
+	public Shutdown(Application application) {
+		this.application = application;
+	}
 	
-    /**
-     * {@inheritDoc}
-     */	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-    public void run() {
+	public void run() {
 		this.application.shutdown();
-    }
+	}
 }

@@ -5,14 +5,14 @@
 		<format>zip</format>
 	</formats>
 	<fileSets>
-        <fileSet>
-            <directory>src/main/bin</directory>
-            <outputDirectory>bin</outputDirectory>
-            <filtered>true</filtered>
-            <includes>
-                <include>startup.*</include>
-            </includes>
-        </fileSet>
+		<fileSet>
+			<directory>src/main/bin</directory>
+			<outputDirectory>bin</outputDirectory>
+			<filtered>true</filtered>
+			<includes>
+				<include>startup.*</include>
+			</includes>
+		</fileSet>
 		<fileSet>
 			<directory>src/main/resources</directory>
 			<outputDirectory>conf</outputDirectory>

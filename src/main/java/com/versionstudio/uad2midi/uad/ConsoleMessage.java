@@ -5,14 +5,14 @@
 package com.versionstudio.uad2midi.uad;
 
 public class ConsoleMessage {
-    private DeviceData data;
-    private String path;
+	private DeviceData data;
+	private String path;
 
-    public DeviceData getData() {
-        return this.data;
-    }
+	public DeviceData getData() {
+		return this.data;
+	}
 
-    public String getPath() {
-        return this.path;
-    }
+	public String getPath() {
+		return this.path;
+	}
 }

@@ -7,14 +7,14 @@ package com.versionstudio.uad2midi.uad;
 import java.util.Map;
 
 public class DeviceData {
-    private Map<String,Object> children;
-    private Map<String,DeviceProperty> properties;
+	private Map<String,Object> children;
+	private Map<String,DeviceProperty> properties;
 
-    public Map<String,Object> getChildren() {
-        return this.children;
-    }
+	public Map<String,Object> getChildren() {
+		return this.children;
+	}
 
-    public Map<String,DeviceProperty> getProperties() {
-        return this.properties;
-    }
+	public Map<String,DeviceProperty> getProperties() {
+		return this.properties;
+	}
 }

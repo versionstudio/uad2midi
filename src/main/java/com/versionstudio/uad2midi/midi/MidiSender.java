@@ -47,6 +47,15 @@ public class MidiSender {
 	}
 
 	/**
+	 * Disconnect from the MIDI device.
+	 */
+	public void disconnect() {
+		if ( this.device!= null ) {
+			this.device.close();
+		}
+	}
+
+	/**
 	 * Send a MIDI message.
 	 * @param command the MIDI command represented by the message. See javax.sound.midi.ShortMessage for values
 	 * @param channel the channel associated with the message
@@ -67,14 +76,5 @@ public class MidiSender {
 		}
 
 		this.receiver.send(msg,-1);
-	}
-
-	/**
-	 * Disconnect from the MIDI device.
-	 */
-	public void disconnect() {
-		if ( this.device!= null ) {
-			this.device.close();
-		}
 	}
 }
