@@ -8,7 +8,7 @@ UAD to MIDI *(uad2midi)* is a simple application that connects to your UAD inter
 
 ### Why on earth would you ever need this?
 
-I am running UAD interfaces in my studio together with two sets of studio monitors/speakers which are controlled by ALT monitoring on the hardware. I am also running [Sonarworks Reference 4](https://www.sonarworks.com/reference) (systemwide) for speaker calibration, where each monitor pair has a different calibration profile in Sonarworks. Sadly, Sonarworks Reference 4 cannot have multiple profiles loaded at once which means you need to manually change calibration profile each time you toggle monitors.
+I am running UAD interfaces in my studio together with two sets of studio monitors/speakers which are controlled by ALT monitoring on the hardware. I am also running [Sonarworks Reference 4](https://www.sonarworks.com/reference) (systemwide) for speaker calibration, where each monitor pair has a different calibration profile in Sonarworks. Sadly, Sonarworks Reference 4 cannot have multiple profiles loaded at once which means you need to manually select calibration profile each time you toggle monitors.
 
 Happily, Sonarworks Reference 4 supports binding calibration profiles to MIDI messages, and that's where this application comes in. The default configuration coming with UAD 2 MIDI comes configured for just this purpose, where toggling ALT monitoring on your UAD interface will trigger MIDI messages that you can bind to the Sonarworks Reference 4 calibration profiles of you choice.
 
