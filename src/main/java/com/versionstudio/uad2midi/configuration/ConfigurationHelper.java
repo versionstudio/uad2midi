@@ -40,8 +40,8 @@ public class ConfigurationHelper {
      * @return the property value
      */
 	public boolean getBooleanValue(String key) {
-    	String value = getStringValue(key);
-    	return Boolean.parseBoolean(value);
+		String value = getStringValue(key);
+		return Boolean.parseBoolean(value);
     }
     
     /**
@@ -64,13 +64,13 @@ public class ConfigurationHelper {
      * @return the property value
      */
 	public int getIntValue(String key) {
-    	String value = getStringValue(key);
+		String value = getStringValue(key);
     	try {
     		return Integer.parseInt(value);
     	} catch(NumberFormatException e) {
     		return -1;
     	}
-    }
+	}
     
     /**
      * Get a int property value.
@@ -84,7 +84,7 @@ public class ConfigurationHelper {
 		} else {
 			return defaultValue;
 		}
-    }
+	}
     
     /**
      * Get a string property value.
@@ -109,9 +109,9 @@ public class ConfigurationHelper {
     public String getStringValue(String key,String defaultValue) {
     	if ( this.properties.containsKey(key) ) {
     		return getStringValue(key);
-		} else {
+    	} else {
     		return defaultValue;
-		}
+    	}
     }
 
 	/**
