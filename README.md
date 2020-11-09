@@ -1,6 +1,6 @@
 # uad2midi - Universal Audio UAD to MIDI trigger
 
-See video example below for how I automatically change the speaker profile in Sonarworks Reference 4 when I press ALT monitoring on my UAD device:
+> Simple application that allows me to select Sonarworks Reference 4 speaker profiles automatically when I toggle studio monitors
 
 ### What does this do?
 
