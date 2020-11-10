@@ -42,8 +42,8 @@ For my use case I used the virtual MIDI device *IAC Driver* for sending the MIDI
 - Open up *uad2midi.properties* and set the value of *uad2midi.midi.deviceName* to the name of the port
 
 ###### Hints:
-- The UA Mixer Engine process must be running for this to work. This process starts up along with the UAD Console.
-- Change *rootLogger.level* to *debug* in *log4j2.properties* to see more property names and values coming from your UAD interface.
+- The UA Mixer Engine process must be running for this to work. This starts up along with the UAD Console
+- Change *rootLogger.level* to *debug* in *log4j2.properties* to view what UAD events you can trigger on
 - UAD to MIDI won't start if the MIDI device cannot be initialized
 - UAD to MIDI will automatically reconnect if connection to the UAD Console is lost
-- If you want to control Sonarworks Reference 4 like me, use *NOTE_OFF* as the MIDI command
+- If you want to control Sonarworks Reference 4 like I did, use *NOTE_OFF* as the MIDI command
