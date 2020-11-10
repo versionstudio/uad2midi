@@ -28,9 +28,9 @@ This application was made possible thanks to the reverse engineering done by Rad
 The application has been developed and tested on Mac OSX, and requires no special permissions to run. There's no user interface. Everything is configured in *uad2midi.properties*. Run the provided script *bin/startup.sh* to launch uad2midi.
 
 ###### Requirements:
-- UAD hardware
-- MIDI device
-- Java runtime
+- Universal Audio UAD interface 
+- MIDI device (or virtual device as explained below)
+- Java Runtime (for running the application)
 
 ###### Virtual MIDI device on Mac OSX
 For my use case I used the virtual MIDI device *IAC Driver* for sending the MIDI messages. To do this:
