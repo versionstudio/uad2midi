@@ -32,7 +32,7 @@ The application has been developed and tested on Mac OSX, and requires no specia
 - Universal Audio UAD interface 
 - MIDI device (or virtual device as explained below)
 
-##### Installation and running:
+###### Installation and running:
 1. Unpack the application to a directory of your choide
 2. Edit the startup script *bin/uad2midi.sh* and set *UAD2MIDI_HOME* to the directory where you unpacked uad2midi
 3. Edit configurations through *conf/uad2midi.properties*. Generally MIDI device name and triggers should only need tweaking
