@@ -28,7 +28,7 @@ The application has been developed and tested on Mac OSX, and requires no specia
 - Java runtime
 
 ###### Virtual MIDI device on Mac OSX
-For my own use case I used the virtual MIDI device *IAC Driver*. To do this:
+For my use case I used the virtual MIDI device *IAC Driver* for sending the MIDI messages. To do this:
 - Search for the *Audio MIDI Setup* application in Spotlight
 - In Audio MIDI Setup, click *Window* and then *Show MIDI Studio*
 - Double-click IAC Driver
