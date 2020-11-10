@@ -1,6 +1,6 @@
 # uad2midi - Universal Audio UAD to MIDI trigger
 
-> This is a simple application that allows me to automatically select Sonarworks Reference 4 speaker profiles when I toggle my studio monitors on my UAD interface.
+> Simple application that allows me to automatically select Sonarworks Reference 4 speaker profiles when I toggle my studio monitors.
 
 ### What does this do?
 
