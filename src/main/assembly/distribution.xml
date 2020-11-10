@@ -18,7 +18,7 @@
 			<outputDirectory>bin</outputDirectory>
 			<filtered>true</filtered>
 			<includes>
-				<include>startup.*</include>
+				<include>*.sh</include>
 			</includes>
 		</fileSet>
 		<fileSet>
