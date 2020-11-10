@@ -35,7 +35,7 @@ The application has been developed and tested on Mac OSX, and requires no specia
 ###### Installation and running:
 1. Unpack the application to a directory of your choide
 2. Edit startup script *bin/uad2midi.sh* and set *UAD2MIDI_HOME* to the directory where you unpacked uad2midi
-3. Edit configuration *conf/uad2midi.properties*. Generally MIDI device name and triggers should only need tweaking
+3. Edit configuration *conf/uad2midi.properties*. Generally, only MIDI device and triggers should need tweaking
 4. Run the application through *sh uad2midi.sh start*. Stopping the application is done through *sh uad2midi.sh stop*
 5. The application log *uad2midi.logo* can be found in the uad2midi home directory. For debugging or more detailed logging to find out what data your UAD Console makes available for use in triggers
 
