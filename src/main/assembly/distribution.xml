@@ -1,9 +1,17 @@
 <assembly>
-	<id>distribution</id>
+	<id>release</id>
 	<formats>
 		<format>dir</format>
 		<format>zip</format>
 	</formats>
+	<files>
+		<file>
+			<source>LICENSE</source>
+		</file>
+		<file>
+			<source>README.md</source>
+		</file>
+	</files>
 	<fileSets>
 		<fileSet>
 			<directory>src/main/bin</directory>
