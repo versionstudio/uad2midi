@@ -2,6 +2,11 @@
 
 > Simple application that allows me to automatically select Sonarworks Reference 4 speaker profiles when I toggle my studio monitors.
 
+<p align="center">
+Download latest version: 
+https://github.com/versionstudio/uad2midi/raw/main/uad2midi-1.0-release.zip
+</p>
+
 ### What does this do?
 
 UAD to MIDI *(uad2midi)* is a simple application that connects to your UAD interface and monitors any state changes, such as mutes, volumes or when you switch ALT monitoring. The application allows you to configure triggers on these events that can dispatch MIDI messages through any of your connected MIDI devices.
