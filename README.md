@@ -1,6 +1,6 @@
 # uad2midi - Universal Audio UAD to MIDI trigger
 
-> Simple application that allows me to select Sonarworks Reference 4 speaker profiles automatically when I toggle studio monitors
+> This is a simple application that allows me to automatically select Sonarworks Reference 4 speaker profiles when I toggle my studio monitors on my UAD interface.
 
 ### What does this do?
 
@@ -20,15 +20,15 @@ This application was made possible thanks to the reverse engineering done by Rad
 
 ### How do I set this up?
 
-The application has been developed and tested on Mac OSX, and requires no special permissions to run. There's no user interface. Everything is configured in *uad2midi.properties*. Run the provided script *bin/startup.sh* to launch ua2midi.
+The application has been developed and tested on Mac OSX, and requires no special permissions to run. There's no user interface. Everything is configured in *uad2midi.properties*. Run the provided script *bin/startup.sh* to launch uad2midi.
 
 ###### Requirements:
 - UAD hardware
 - MIDI device
-- Java
+- Java runtime
 
 ###### Virtual MIDI device on Mac OSX
-For my own use case I used virtual MIDI device *IAC Driver*. To do this:
+For my own use case I used the virtual MIDI device *IAC Driver*. To do this:
 - Search for the *Audio MIDI Setup* application in Spotlight
 - In Audio MIDI Setup, click *Window* and then *Show MIDI Studio*
 - Double-click IAC Driver
