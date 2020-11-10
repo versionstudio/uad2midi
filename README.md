@@ -25,25 +25,31 @@ This application was made possible thanks to the reverse engineering done by Rad
 
 ### How do I set this up?
 
-The application has been developed and tested on Mac OSX, and requires no special permissions to run. There's no user interface. Everything is configured in *uad2midi.properties*. Run the provided script *bin/startup.sh* to launch uad2midi.
+The application has been developed and tested on Mac OSX, and requires no special permissions to run. The UA Mixer Engine process must be running for this to work.  UA Mixer Engine starts up along with the UAD Console.
 
 ###### Requirements:
+- Java Runtime (version 11 or later)
 - Universal Audio UAD interface 
 - MIDI device (or virtual device as explained below)
-- Java Runtime (for running the application)
 
-###### Virtual MIDI device on Mac OSX
+###### Installation and running:
+1. Unpack the application to a directory of your choide
+2. Edit the startup script *bin/uad2midi.sh* and set *UAD2MIDI_HOME* to the directory where you unpacked uad2midi
+3. Edit configurations through *conf/uad2midi.properties*. Generally MIDI device name and triggers should only need tweaking
+4. Run the application through *sh uad2midi.sh start*. Stopping the application is done through *sh uad2midi.sh stop*
+5. The application log *uad2midi.logo* can be found in the uad2midi home directory. For debugging or more detailed logging to find out what data your UAD Console makes available for use in triggers
+
+###### Setting up a virtual MIDI device on Mac OSX
 For my use case I used the virtual MIDI device *IAC Driver* for sending the MIDI messages. To do this:
 - Search for the *Audio MIDI Setup* application in Spotlight
 - In Audio MIDI Setup, click *Window* and then *Show MIDI Studio*
 - Double-click IAC Driver
 - Ensure that *Device is online* is clicked to make the device usable
-- Click the *Ports* tab and note the name of the port.
+- Click the *Ports* tab and make note of the name of the port.
 - Open up *uad2midi.properties* and set the value of *uad2midi.midi.deviceName* to the name of the port
 
-###### Hints:
-- The UA Mixer Engine process must be running for this to work. This starts up along with the UAD Console
-- Change *rootLogger.level* to *debug* in *log4j2.properties* to view what UAD events you can trigger on
+###### Some hints:
 - UAD to MIDI won't start if the MIDI device cannot be initialized
-- UAD to MIDI will automatically reconnect if connection to the UAD Console is lost
+- UAD to MIDI will automatically try to reconnect if connection to the UAD Console is lost
 - If you want to control Sonarworks Reference 4 like I did, use *NOTE_OFF* as the MIDI command
+- For auto-starting the application on login (Mac OSX), use [Automator](https://support.apple.com/guide/automator/welcome/mac) to run *uad2midi.sh*
