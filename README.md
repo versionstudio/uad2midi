@@ -46,4 +46,4 @@ For my use case I used the virtual MIDI device *IAC Driver* for sending the MIDI
 - Change *rootLogger.level* to *debug* in *log4j2.properties* to see more property names and values coming from your UAD interface.
 - UAD to MIDI won't start if the MIDI device cannot be initialized
 - UAD to MIDI will automatically reconnect if connection to the UAD Console is lost
-- As a sidenote, Sonarworks Reference 4 doesn't seem to trigger on *NOTE_ON* MIDI command, so use *NOTE_OFF*
+- If you want to control Sonarworks Reference 4 like me, use *NOTE_OFF* as the MIDI command
