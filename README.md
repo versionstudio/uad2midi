@@ -21,7 +21,7 @@ Since UAD 2 MIDI is configurable, you can make use of it for other use cases as 
 
 ### Credit where credit's due
 
-This application was made possible thanks to the reverse engineering done by Radu Varga, author of [UA-Midi-Control](https://github.com/raduvarga/UA-Midi-Control). Thanks to the detailed [explanation](https://github.com/raduvarga/UA-Midi-Control#ok-so-how-did-you-do-it) I got good understanding of how to communicate with the UAD hardware.
+This application was made possible thanks to the reverse engineering done by Radu Varga, author of [UA-Midi-Control](https://github.com/raduvarga/UA-Midi-Control). Thanks to the detailed [explanation](https://github.com/raduvarga/UA-Midi-Control#ok-so-how-did-you-do-it) I got a good understanding of how to communicate with the UAD hardware.
 
 ### How do I set this up?
 
