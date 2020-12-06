@@ -214,7 +214,7 @@ public class ConsoleClient {
 
 		List<String> childKeys = new ArrayList<>(msg.getData().getChildren().keySet());
 		for (String key : childKeys) {
-			logger.info("Requesting data for UAD device: {} (Enable debug logging to trace data)",key);
+			logger.info("Requesting data for UAD device: {}",key);
 			sendGetDevice(key);
 		}
 	}
@@ -229,7 +229,7 @@ public class ConsoleClient {
 				jsonMessage,ConsoleMessage.class);
 
 		List<String> childKeys = new ArrayList<>(msg.getData().getChildren().keySet());
-		logger.info("Requesting data for {} inputs on UAD device: {} (Enable debug logging to trace data)",childKeys.size(),deviceId);
+		logger.info("Requesting data for {} inputs on UAD device: {}",childKeys.size(),deviceId);
 		for (String key : childKeys) {
 			sendGetInput(deviceId,key);
 		}
