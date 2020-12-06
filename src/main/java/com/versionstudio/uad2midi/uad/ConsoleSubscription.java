@@ -5,25 +5,26 @@
 package com.versionstudio.uad2midi.uad;
 
 public class ConsoleSubscription {
-	private String data;
 	private String path;
-	private String response;
+	private String value;
+
+	private String consoleCommand;
 
 	private Integer midiCommand;
 	private Integer midiChannel;
 	private Integer midiData1;
 	private Integer midiData2;
 
-	public String getData() {
-		return this.data;
-	}
-
 	public String getPath() {
 		return this.path;
 	}
 
-	public String getResponse() {
-		return this.response;
+	public String getValue() {
+		return this.value;
+	}
+
+	public String getConsoleCommand() {
+		return this.consoleCommand;
 	}
 
 	public Integer getMidiCommand() {

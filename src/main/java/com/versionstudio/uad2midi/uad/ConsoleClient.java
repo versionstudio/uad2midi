@@ -258,7 +258,7 @@ public class ConsoleClient {
 			// ensure we have a subscription that matches the exact path
 			// and as well as the new data value
 			if ( sub.getPath().equals(path)
-					&& (sub.getData().equals(data) || sub.getData()==null) ) {
+					&& (sub.getValue().equals(data) || sub.getValue()==null) ) {
 
 				// subscription is configured to send a MIDI message
 				if ( sub.getMidiCommand()!=null ) {
@@ -270,9 +270,9 @@ public class ConsoleClient {
 					}
 				}
 
-				// subscription is configured to send a response to the UAD console
-				if ( sub.getResponse()!=null ) {
-					this.sendMessage(sub.getResponse());
+				// subscription is configured to send a command to the UAD console
+				if ( sub.getConsoleCommand()!=null ) {
+					this.sendMessage(sub.getConsoleCommand());
 				}
 			}
 		}
