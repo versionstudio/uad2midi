@@ -18,7 +18,7 @@ public class Application {
 	private static final String CONFIGURATION_MIDI_DEVICE_NAME = "uad2midi.midi.deviceName";
 	private static final String CONFIGURATION_UAD_HOSTNAME = "uad2midi.uad.hostname";
 	private static final String CONFIGURATION_UAD_PORT = "uad2midi.uad.port";
-	private static final String CONFIGURATION_UAD_TRIGGER_PREFIX = "uad2midi.trigger.";
+	private static final String CONFIGURATION_UAD_SUBSCRIPTION_PREFIX = "uad2midi.subscription.";
 
 	private final ConfigurationHelper configuration;
 	private final ConsoleClient consoleClient;
@@ -49,7 +49,7 @@ public class Application {
 		this.consoleClient.start(
 				this.configuration.getStringValue(CONFIGURATION_UAD_HOSTNAME, "localhost"),
 				this.configuration.getIntValue(CONFIGURATION_UAD_PORT,4710),
-				this.configuration.getValuesByKeyPrefix(CONFIGURATION_UAD_TRIGGER_PREFIX));
+				this.configuration.getValuesByKeyPrefix(CONFIGURATION_UAD_SUBSCRIPTION_PREFIX));
 	}
 	
 	/**

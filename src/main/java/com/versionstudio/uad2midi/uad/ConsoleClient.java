@@ -27,7 +27,7 @@ public class ConsoleClient {
 
 	private static final long RECONNECT_WAIT = 5000;
 
-	private final List<ConsoleTrigger> triggers;
+	private final List<ConsoleSubscription> subscriptions;
 	private final MidiSender midiSender;
 	private final ObjectMapper objectMapper;
 	private Socket clientSocket;
@@ -38,7 +38,7 @@ public class ConsoleClient {
 
 	public ConsoleClient(MidiSender midiSender) {
 		this.midiSender = midiSender;
-		this.triggers = new ArrayList<>();
+		this.subscriptions = new ArrayList<>();
 		this.objectMapper = new ObjectMapper();
 	}
 
@@ -47,18 +47,18 @@ public class ConsoleClient {
 	 * to the UAD console and begin polling messages
 	 * @param uadHostname the hostname for connecting to the UAD console
 	 * @param uadPort the port for connecting to the UAD console
-	 * @param triggerConfigs the trigger configurations in JSON format to be deserialized into ConsoleTrigger instances
+	 * @param subscriptionConfigs the configurations in JSON format to be deserialized into ConsoleSubscription instances
 	 */
-	public void start(String uadHostname, int uadPort, List<String> triggerConfigs) {
+	public void start(String uadHostname, int uadPort, List<String> subscriptionConfigs) {
 		this.uadHostname = uadHostname;
 		this.uadPort = uadPort;
 
-		for ( String triggerConfig : triggerConfigs ) {
+		for ( String subscriptionConfig : subscriptionConfigs ) {
 			try {
-				this.triggers.add(this.objectMapper.readValue(
-						triggerConfig,ConsoleTrigger.class));
+				this.subscriptions.add(this.objectMapper.readValue(
+						subscriptionConfig,ConsoleSubscription.class));
 			} catch (JsonProcessingException e) {
-				logger.error("Failed to deserialize JSON into ConsoleTrigger: {}", triggerConfig);
+				logger.error("Failed to deserialize JSON into ConsoleSubscription: {}", subscriptionConfig);
 			}
 		}
 
@@ -67,6 +67,7 @@ public class ConsoleClient {
 			public void run() {
 				while ( true ) {
 					if ( connect() ) {
+						subscribe();
 						sendGetDevices();
 						poll();
 						disconnect();
@@ -114,6 +115,23 @@ public class ConsoleClient {
 	}
 
 	/**
+	 * Initiate all UAD console subscriptions.
+	 */
+	private void subscribe() {
+		List<String> requestedSubs = new ArrayList<>();
+		for ( ConsoleSubscription sub : this.subscriptions ) {
+			// don't subscribe multiple times to the same path
+			if ( requestedSubs.contains(sub.getPath() ) ) {
+				continue;
+			}
+
+			logger.info("Subscribing to UAD console message: {}", sub.getPath());
+			sendSubscribe(sub.getPath());
+			requestedSubs.add(sub.getPath());
+		}
+	}
+
+	/**
 	 * Read incoming messages from the UAD console.
 	 * Please note that Input Stream scanning used here is a blocking operation
 	 * until thread is interrupted or UAD console connection is lost.
@@ -153,12 +171,21 @@ public class ConsoleClient {
 
 			// /devices/<id>
 			else if ( path.length==2 ) {
-				processDeviceData(path[1],jsonMessage);
+				processDeviceData(path[1]);
 			}
 
-			// msg: /devices/<id>/<property>/value
-			else if ( path.length==4 && path[3].equals("value")) {
-				processPropertyValueChange(path[1],path[2],jsonMessage);
+			// /devices/<id>/inputs
+			else if (path.length==3 && path[2].equals("inputs") ) {
+				processInputs(path[1],jsonMessage);
+			}
+
+			// /devices/<id>/<property>/value
+			// /devices/<id>/inputs/<id>/<property>/value
+			// /devices/<id>/inputs/<id>/preamps/0/<property>/value
+			// /devices/<id>/inputs/<id>/sends/<id><property>/value
+			// etc...
+			else if ( path[path.length-1].equals("value")) {
+				processValueChange(jsonMessage);
 			}
 		} catch (JsonProcessingException e) {
 			logger.error("Received invalid JSON response from UAD console",e);
@@ -187,61 +214,65 @@ public class ConsoleClient {
 
 		List<String> childKeys = new ArrayList<>(msg.getData().getChildren().keySet());
 		for (String key : childKeys) {
-			logger.info("Requesting data for UAD device {}",key);
+			logger.info("Requesting data for UAD device: {} (Enable debug logging to trace data)",key);
 			sendGetDevice(key);
 		}
 	}
 
 	/**
-	 * Process '/devices/<id>' message and send a subscription request
-	 * for those UAD property value changes we have triggers for.
-	 * @param deviceId the ID of the current device
+	 * Process '/devices/<id>/inputs' message and request more data for all inputs belonging to a device.
+	 * @param deviceId the ID of the device owning the input
 	 * @param jsonMessage the JSON message coming from UAD console
 	 */
-	private void processDeviceData(String deviceId, String jsonMessage) throws JsonProcessingException {
+	private void processInputs(String deviceId, String jsonMessage) throws JsonProcessingException {
 		ConsoleMessage msg = this.objectMapper.readValue(
 				jsonMessage,ConsoleMessage.class);
 
-		// keep track of requested subscriptions to ensure we
-		// only subscribe once per UAD property and device
-		List<String> requestedSubs = new ArrayList<>();
-
-		for ( ConsoleTrigger trigger : this.triggers ) {
-			// check if we have a trigger for this UAD property
-			if ( trigger.getDeviceId().equals(deviceId)
-					&& msg.getData().getProperties().containsKey(trigger.getProperty()) ) {
-				// do not subscribe to the same property more than once
-				if ( requestedSubs.contains(trigger.getProperty()) ) {
-					continue;
-				}
-
-				logger.info("Subscribing to UAD device {} and property: {}", deviceId, trigger.getProperty());
-				sendSubscribe(deviceId,trigger.getProperty());
-				requestedSubs.add(trigger.getProperty());
-			}
+		List<String> childKeys = new ArrayList<>(msg.getData().getChildren().keySet());
+		logger.info("Requesting data for {} inputs on UAD device: {} (Enable debug logging to trace data)",childKeys.size(),deviceId);
+		for (String key : childKeys) {
+			sendGetInput(deviceId,key);
 		}
 	}
 
 	/**
-	 * Process '/devices/<id>/<property>/value' message and trigger MIDI messages
-	 * for those property value changes that matches those we've subscribed to.
+	 * Process '/devices/<id>' message and send a subscription request
+	 * for all configured subscriptions.
 	 * @param deviceId the ID of the current device
-	 * @param property the name of the property that changed value
+	 */
+	private void processDeviceData(String deviceId) {
+		sendGetInputs(deviceId);
+	}
+
+	/**
+	 * Process any message from UAD that indicates a value change
+	 * and trigger if we have a configured subscription that matches this change of value.
 	 * @param jsonMessage the JSON message coming from UAD console
 	 */
-	private void processPropertyValueChange(String deviceId, String property, String jsonMessage) throws JsonProcessingException {
+	private void processValueChange(String jsonMessage) throws JsonProcessingException {
 		Map<String,Object> map = this.objectMapper.readValue(jsonMessage, Map.class);
-		String newValue = map.get("data").toString();
+		String path = map.get("path").toString();
+		String data = map.get("data").toString();
 
-		for ( ConsoleTrigger trigger : this.triggers ) {
-			// ensure that we have a trigger that matches the requirements
-			if ( trigger.getDeviceId().equals(deviceId) && trigger.getProperty().equals(property)
-					&& ( trigger.getValue().equals(newValue) || trigger.getValue()==null )) {
-				try {
-					this.midiSender.sendMessage(trigger.getMidiCommand(),trigger.getMidiChannel(),
-							trigger.getMidiData1(),trigger.getMidiData2());
-				} catch (MidiException e) {
-					logger.error("Error while sending MIDI message",e);
+		for ( ConsoleSubscription sub : this.subscriptions ) {
+			// ensure we have a subscription that matches the exact path
+			// and as well as the new data value
+			if ( sub.getPath().equals(path)
+					&& (sub.getData().equals(data) || sub.getData()==null) ) {
+
+				// subscription is configured to send a MIDI message
+				if ( sub.getMidiCommand()!=null ) {
+					try {
+						this.midiSender.sendMessage(sub.getMidiCommand(),sub.getMidiChannel(),
+								sub.getMidiData1(),sub.getMidiData2());
+					} catch (MidiException e) {
+						logger.error("Error while sending MIDI message",e);
+					}
+				}
+
+				// subscription is configured to send a response to the UAD console
+				if ( sub.getResponse()!=null ) {
+					this.sendMessage(sub.getResponse());
 				}
 			}
 		}
@@ -263,12 +294,29 @@ public class ConsoleClient {
 	}
 
 	/**
-	 * Send message to UAD console for subscribing to changes in a specific property.
+	 * Send message to UAD console for retrieving all inputs for a specific device.
 	 * @param deviceId the ID of the device
-	 * @param propertyName the name of the property to subscribe to
 	 */
-	private void sendSubscribe(String deviceId, String propertyName) {
-		sendMessage("subscribe /devices/" + deviceId + "/" + propertyName);
+	private void sendGetInputs(String deviceId) {
+		sendMessage("get /devices/" + deviceId + "/inputs");
+	}
+
+	/**
+	 * Send message to UAD console for retrieving more information about an input.
+	 * @param deviceId the ID of the device
+	 * @param inputId the ID of the input
+	 */
+	private void sendGetInput(String deviceId,String inputId) {
+		sendMessage("get /devices/" + deviceId + "/inputs/" + inputId);
+		sendMessage("get /devices/" + deviceId + "/inputs/" + inputId + "/sends");
+	}
+
+	/**
+	 * Send message to UAD console for subscribing to changes in a specific property.
+	 * @param path the message path to subscribe to
+	 */
+	private void sendSubscribe(String path) {
+		sendMessage("subscribe " + path);
 	}
 
 	/**
