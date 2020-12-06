@@ -3,7 +3,7 @@
 # set this to the root directory where you unpacked uad2midi
 UAD2MIDI_HOME=/Users/versionstudio/uad2midi-1.1/
 
-# uncomment this and point to java distribution if not already installed
+# uncomment this and point to java distribution as needed
 #export JAVA_HOME=
 
 apid=$(pgrep -f uad2midi-1.1.jar)
