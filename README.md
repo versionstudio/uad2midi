@@ -4,12 +4,12 @@
 
 <p align="center">
 Download latest version: 
-https://github.com/versionstudio/uad2midi/raw/main/uad2midi-1.0-release.zip
+https://github.com/versionstudio/uad2midi/raw/main/uad2midi-1.1-release.zip
 </p>
 
 ### What does this do?
 
-UAD to MIDI *(uad2midi)* is a simple application that connects to your UAD interface and monitors any state changes, such as mutes, volumes or when you switch ALT monitoring. The application allows you to configure triggers on these events that can dispatch MIDI messages through any of your connected MIDI devices.
+UAD to MIDI *(uad2midi)* is a simple application that connects to your UAD interface and monitors any state changes, such as mutes, volumes or when you switch ALT monitoring. The application allows you to configure triggers on these events that can dispatch MIDI messages through any of your connected MIDI devices or send commands to the UAD console.
 
 ### Why on earth would you ever need this?
 
@@ -29,8 +29,7 @@ The application has been developed and tested on Mac OSX, and requires no specia
 
 ###### Requirements:
 - Java Runtime (version 11 or later)
-- Universal Audio UAD interface 
-- MIDI device (or virtual device as explained below)
+- Universal Audio UAD interface
 
 ###### Installation and running:
 1. Unpack the application to a directory of your choide
