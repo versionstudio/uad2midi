@@ -4,7 +4,7 @@
 
 <p align="center">
 Download latest version: 
-https://github.com/versionstudio/uad2midi/raw/main/uad2midi-1.1-release.zip
+https://github.com/versionstudio/uad2midi/raw/main/uad2midi-1.2-release.zip
 </p>
 
 ### What does this do?

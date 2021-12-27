@@ -1,19 +1,19 @@
 #!/bin/sh
 
 # set this to the root directory where you unpacked uad2midi
-UAD2MIDI_HOME=/Users/versionstudio/uad2midi-1.1/
+UAD2MIDI_HOME=/Users/versionstudio/uad2midi-1.2/
 
 # uncomment this and point to java distribution as needed
 #export JAVA_HOME=
 
-apid=$(pgrep -f uad2midi-1.1.jar)
+apid=$(pgrep -f uad2midi-1.2.jar)
 
 start() {
 	if [ -n "$apid" ]; then
 		echo "uad2midi is already running, pid is $apid"
 	else
 		cd $UAD2MIDI_HOME
-		java -jar ./lib/uad2midi-1.1.jar &
+		java -jar ./lib/uad2midi-1.2.jar &
 	fi
 }
 
